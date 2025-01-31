@@ -1,0 +1,43 @@
+/* Vnos YouTube kanala */
+.channel-input {
+    margin-bottom: 20px;
+}
+
+.channel-input input {
+    padding: 10px;
+    font-size: 1em;
+    width: 250px;
+    border-radius: 5px;
+    border: none;
+}
+
+.channel-input button {
+    padding: 10px;
+    font-size: 1em;
+    margin-left: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff6600;
+    color: white;
+}
+
+.channel-input button:hover {
+    background-color: #cc5200;
+}
+
+/* Gumb za brisanje kanala */
+.remove-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.remove-btn:hover {
+    background-color: darkred;
+}
+

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Feed</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📺 YouTube Feed</h1>
+
+        <!-- Vnos API ključa -->
+        <div class="api-input">
+            <input type="password" id="apiKeyInput" placeholder="Vnesi YouTube API ključ">
+            <button onclick="saveApiKey()">Shrani ključ</button>
+            <button onclick="clearApiKey()">Počisti ključ</button>
+        </div>
+
+        <!-- Dodajanje novih kanalov -->
+        <div class="channel-input">
+            <input type="text" id="channelIdInput" placeholder="Vnesi YouTube Channel ID">
+            <button onclick="addChannel()">Dodaj kanal</button>
+        </div>
+
+        <div id="channels"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
+<!-- https://www.tunepocket.com/youtube-channel-id-finder/#channle-id-finder-form -->
