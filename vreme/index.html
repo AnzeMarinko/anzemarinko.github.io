@@ -12,6 +12,10 @@
     <div id="demo"></div></br>
     <div id="plot1" style="width:100%;"></div>
     <div id="plot2" style="width:100%;"></div>
+    <div id="radarImage" style="width:100%; text-align:center; margin-top:20px;">
+        <h3>Radarska slika padavin</h3>
+        <img id="radar" src="https://meteo.arso.gov.si/uploads/probase/www/observ/radar/si0-rm-anim.gif" style="width:80%; max-width:600px;">
+    </div>
 
     <script>
         const x = document.getElementById("demo");
@@ -52,7 +56,8 @@
             // Prvi graf (Temperatura in Obsevanje)
             const data1 = [
                 { x: hourly_times, y: obj.hourly.temperature_2m, mode: "lines", name: 'Temperatura [' + obj.hourly_units.temperature_2m + ']', line: { color: tempColor }, yaxis: "y" },
-                { x: hourly_times, y: obj.hourly.direct_normal_irradiance, mode: "lines", name: 'Sonce [' + obj.hourly_units.direct_normal_irradiance + ']', line: { color: sonColor }, yaxis: "y2" }
+                { x: hourly_times, y: obj.hourly.direct_normal_irradiance, mode: "lines", name: 'Sonce [' + obj.hourly_units.direct_normal_irradiance + ']', line: { color: sonColor }, yaxis: "y2" },
+                { x: [currentTime, currentTime], y: [Math.min(...obj.hourly.temperature_2m), Math.max(...obj.hourly.temperature_2m)], mode: "lines", line: { color: "gold", dash: "dash" }, name: "Trenutni čas" }
             ];
 
             const layout1 = {
@@ -66,7 +71,8 @@
             // Drugi graf (Veter in Padavine)
             const data2 = [
                 { x: hourly_times, y: obj.hourly.wind_speed_10m, mode: "lines", name: 'Hitrost vetra [' + obj.hourly_units.wind_speed_10m + ']', line: { color: veterColor }, yaxis: "y" },
-                { x: hourly_times, y: obj.hourly.precipitation, type: "bar", name: 'Padavine [' + obj.hourly_units.precipitation + ']', marker: { color: padavColor }, opacity: 0.5, yaxis: "y2" }
+                { x: hourly_times, y: obj.hourly.precipitation, type: "bar", name: 'Padavine [' + obj.hourly_units.precipitation + ']', marker: { color: padavColor }, opacity: 0.5, yaxis: "y2" },
+                { x: [currentTime, currentTime], y: [0, Math.max(...obj.hourly.wind_speed_10m)], mode: "lines", line: { color: "gold", dash: "dash" }, name: "Trenutni čas" }
             ];
 
             const layout2 = {
