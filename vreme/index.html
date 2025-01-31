@@ -46,7 +46,6 @@
             localStorage.setItem("lastLatitude", latitude);
             localStorage.setItem("lastLongitude", longitude);
             fetchWeather(latitude, longitude);
-            fetchSunMoon(latitude, longitude);
         }
 
         function useLastKnownPosition() {
@@ -54,7 +53,6 @@
             const lastLongitude = localStorage.getItem("lastLongitude");
             if (lastLatitude && lastLongitude) {
                 fetchWeather(lastLatitude, lastLongitude);
-                fetchSunMoon(lastLatitude, lastLongitude);
                 x.innerHTML = "Uporabljena zadnja znana lokacija.";
             } else {
                 x.innerHTML = "Geolocation ni na voljo in ni shranjene lokacije.";
@@ -80,7 +78,8 @@
             const sonColor = '#FF8C00';  // oranžna
             const currentTime = new Date();
 
-            var date = new Date();
+            const endDate = new Date(currentTime);
+            endDate.setDate(endDate.getDate() + 3);
 
             // Prvi graf (Temperatura in Obsevanje)
             const data1 = [
@@ -91,10 +90,29 @@
 
             const layout1 = {
                 title: "Temperatura in Obsevanje",
-                xaxis: { title: "Čas" },
-                yaxis: { title: "Temperatura", tickfont: { color: tempColor } },
-                yaxis2: { title: "Obsevanje", tickfont: { color: sonColor }, overlaying: 'y', side: 'right' },
-                legend: { orientation: "h", y: -0.2 }
+                xaxis: { 
+                    title: "Čas", 
+                    range: [currentTime, endDate],
+                    fixedrange: false, 
+                    showspikes: true,
+                    showline: true },
+                yaxis: { 
+                    title: "Temperatura",
+                    tickfont: { color: tempColor },
+                    showspikes: true,
+                    showline: true,
+                    fixedrange: true },
+                yaxis2: { 
+                    title: "Obsevanje", 
+                    tickfont: { color: sonColor }, 
+                    overlaying: 'y', 
+                    side: 'right', 
+                    showspikes: true,
+                    showline: true,
+                    fixedrange: true },
+                legend: { orientation: "h", y: -0.2 },
+                dragmode: 'pan',  // Set pan as default mode
+                spikedistance: -1, // Enables global spike lines
             };
 
             // Drugi graf (Veter in Padavine)
@@ -106,14 +124,40 @@
 
             const layout2 = {
                 title: "Hitrost vetra in Padavine",
-                xaxis: { title: "Čas" },
-                yaxis: { title: "Hitrost vetra", tickfont: { color: veterColor } },
-                yaxis2: { title: "Padavine", tickfont: { color: padavColor }, overlaying: 'y', side: 'right' },
-                legend: { orientation: "h", y: -0.2 }
+                xaxis: { 
+                    title: "Čas", 
+                    range: [currentTime, endDate],
+                    fixedrange: false, 
+                    showspikes: true,
+                    showline: true },
+                yaxis: { 
+                    title: "Hitrost vetra",
+                    tickfont: { color: veterColor },
+                    showspikes: true,
+                    showline: true,
+                    fixedrange: true },
+                yaxis2: { 
+                    title: "Padavine", 
+                    tickfont: { color: padavColor }, 
+                    overlaying: 'y', 
+                    side: 'right', 
+                    showspikes: true,
+                    showline: true,
+                    fixedrange: true },
+                legend: { orientation: "h", y: -0.2 },
+                dragmode: 'pan',  // Set pan as default mode
+                spikedistance: -1, // Enables global spike lines
             };
 
-            Plotly.newPlot("plot1", data1, layout1, { displayModeBar: true });
-            Plotly.newPlot("plot2", data2, layout2, { displayModeBar: true });
+            const layoutOptions = {
+                showspikes: true,
+                displaylogo: false,
+                displayModeBar: true,
+                modeBarButtonsToRemove: ['toImage', 'pan2d', 'zoom2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d', 'autoScale2d', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toggleSpikelines'],
+            };
+
+            Plotly.newPlot("plot1", data1, layout1, layoutOptions);
+            Plotly.newPlot("plot2", data2, layout2, layoutOptions);
 
             document.getElementById("sunrise").innerHTML = `Sončni vzhod: ${obj.daily.sunrise[0].split('T')[1]}`;
             document.getElementById("sunset").innerHTML = `Sončni zahod: ${obj.daily.sunset[0].split('T')[1]}`;
