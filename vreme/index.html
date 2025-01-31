@@ -23,13 +23,32 @@
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
-                    showPosition, showError, {
+                    saveAndShowPosition, useLastKnownPosition, {
                     enableHighAccuracy: true,
                     maximumAge: Infinity,
                     timeout: 15000
                 });
             } else {
-                x.innerHTML = "Geolocation is not supported by this browser.";
+                useLastKnownPosition();
+            }
+        }
+
+        function saveAndShowPosition(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            localStorage.setItem("lastLatitude", latitude);
+            localStorage.setItem("lastLongitude", longitude);
+            fetchWeather(latitude, longitude);
+        }
+
+        function useLastKnownPosition() {
+            const lastLatitude = localStorage.getItem("lastLatitude");
+            const lastLongitude = localStorage.getItem("lastLongitude");
+            if (lastLatitude && lastLongitude) {
+                fetchWeather(lastLatitude, lastLongitude);
+                x.innerHTML = "Uporabljena zadnja znana lokacija.";
+            } else {
+                x.innerHTML = "Geolocation ni na voljo in ni shranjene lokacije.";
             }
         }
 
@@ -40,9 +59,9 @@
             return xmlHttp.responseText;
         }
 
-        function showPosition(position) {
-            const response = httpGet("https://api.open-meteo.com/v1/dwd-icon?latitude=" + position.coords.latitude +
-                "&longitude=" + position.coords.longitude + "&hourly=temperature_2m,precipitation,wind_speed_10m,direct_normal_irradiance&timezone=Europe%2FBerlin&past_days=3&forecast_days=8");
+        function fetchWeather(latitude, longitude) {
+            const response = httpGet("https://api.open-meteo.com/v1/dwd-icon?latitude=" + latitude +
+                "&longitude=" + longitude + "&hourly=temperature_2m,precipitation,wind_speed_10m,direct_normal_irradiance&timezone=Europe%2FBerlin&past_days=3&forecast_days=8");
             const obj = JSON.parse(response);
             let hourly_times = obj.hourly.time.map(datetime => new Date(datetime));
 
@@ -50,6 +69,7 @@
             const padavColor = '#4682B4';  // modra
             const veterColor = '#008000';  // zelena
             const sonColor = '#FF8C00';  // oranžna
+            const currentTime = new Date();
 
             var date = new Date();
 
@@ -57,7 +77,7 @@
             const data1 = [
                 { x: hourly_times, y: obj.hourly.temperature_2m, mode: "lines", name: 'Temperatura [' + obj.hourly_units.temperature_2m + ']', line: { color: tempColor }, yaxis: "y" },
                 { x: hourly_times, y: obj.hourly.direct_normal_irradiance, mode: "lines", name: 'Sonce [' + obj.hourly_units.direct_normal_irradiance + ']', line: { color: sonColor }, yaxis: "y2" },
-                { x: [currentTime, currentTime], y: [Math.min(...obj.hourly.temperature_2m), Math.max(...obj.hourly.temperature_2m)], mode: "lines", line: { color: "gold", dash: "dash" }, name: "Trenutni čas" }
+                { x: [currentTime, currentTime], y: [Math.min(...obj.hourly.temperature_2m), Math.max(...obj.hourly.temperature_2m)], mode: "lines", line: { color: "gold", dash: "dash", width: 5 }, name: "Trenutni čas" }
             ];
 
             const layout1 = {
@@ -72,7 +92,7 @@
             const data2 = [
                 { x: hourly_times, y: obj.hourly.wind_speed_10m, mode: "lines", name: 'Hitrost vetra [' + obj.hourly_units.wind_speed_10m + ']', line: { color: veterColor }, yaxis: "y" },
                 { x: hourly_times, y: obj.hourly.precipitation, type: "bar", name: 'Padavine [' + obj.hourly_units.precipitation + ']', marker: { color: padavColor }, opacity: 0.5, yaxis: "y2" },
-                { x: [currentTime, currentTime], y: [0, Math.max(...obj.hourly.wind_speed_10m)], mode: "lines", line: { color: "gold", dash: "dash" }, name: "Trenutni čas" }
+                { x: [currentTime, currentTime], y: [0, Math.max(...obj.hourly.wind_speed_10m)], mode: "lines", line: { color: "gold", dash: "dash", width: 5 }, name: "Trenutni čas" }
             ];
 
             const layout2 = {
@@ -85,23 +105,6 @@
 
             Plotly.newPlot("plot1", data1, layout1, { displayModeBar: true });
             Plotly.newPlot("plot2", data2, layout2, { displayModeBar: true });
-        }
-
-        function showError(error) {
-            switch (error.code) {
-                case error.PERMISSION_DENIED:
-                    x.innerHTML = "User denied the request for Geolocation.";
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    x.innerHTML = "Location information is unavailable.";
-                    break;
-                case error.TIMEOUT:
-                    x.innerHTML = "The request to get user location timed out.";
-                    break;
-                case error.UNKNOWN_ERROR:
-                    x.innerHTML = "An unknown error occurred.";
-                    break;
-            }
         }
 
         getLocation();
