@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="sl">
 
 <head>
     <meta charset="utf-8">
@@ -9,9 +9,9 @@
 </head>
 
 <body>
-
     <div id="demo"></div></br>
-    <div id="myPlot" style="width:100%;"></div>
+    <div id="plot1" style="width:100%;"></div>
+    <div id="plot2" style="width:100%;"></div>
 
     <script>
         const x = document.getElementById("demo");
@@ -23,8 +23,7 @@
                     enableHighAccuracy: true,
                     maximumAge: Infinity,
                     timeout: 15000
-                }
-                );
+                });
             } else {
                 x.innerHTML = "Geolocation is not supported by this browser.";
             }
@@ -41,7 +40,6 @@
             const response = httpGet("https://api.open-meteo.com/v1/dwd-icon?latitude=" + position.coords.latitude +
                 "&longitude=" + position.coords.longitude + "&hourly=temperature_2m,precipitation,wind_speed_10m,direct_normal_irradiance&timezone=Europe%2FBerlin&past_days=3&forecast_days=8");
             const obj = JSON.parse(response);
-            var date = new Date();
             let hourly_times = obj.hourly.time.map(datetime => new Date(datetime));
 
             const tempColor = '#DC143C';  // rdeča
@@ -52,68 +50,58 @@
             const max_wind = Math.max(Math.max(...obj.hourly.wind_speed_10m), 20);
             const max_precip = Math.max(Math.max(...obj.hourly.precipitation), 5);
 
-            // Define Data
-            const data = [
-                { x: hourly_times, y: obj.hourly.temperature_2m, mode: "lines", name: 'Temperatura [' + obj.hourly_units.temperature_2m + "]", line: { color: tempColor } },
-                { x: hourly_times, y: obj.hourly.direct_normal_irradiance, mode: "lines", name: "Sonce [" + obj.hourly_units.direct_normal_irradiance + "]", yaxis: "y2", line: { color: sonColor } },
-                { x: hourly_times, y: obj.hourly.wind_speed_10m, mode: "lines", name: "Hitrost vetra [" + obj.hourly_units.wind_speed_10m + "]", yaxis: "y3", line: { color: veterColor } },
-                { x: hourly_times, y: obj.hourly.precipitation, type: "bar", name: "Padavine [" + obj.hourly_units.precipitation + "]", yaxis: "y4", marker: { color: padavColor }, opacity: 0.5 },
-                { x: [date, date], y: [0, max_wind], type: "line", line: { color: "gold" }, yaxis: "y3", name: "Ta trenutek" },
+            var date = new Date();
+
+            // Prvi graf (Temperatura in Obsevanje)
+            const data1 = [
+                { x: hourly_times, y: obj.hourly.temperature_2m, mode: "lines", name: 'Temperatura [' + obj.hourly_units.temperature_2m + ']', line: { color: tempColor } },
+                { x: hourly_times, y: obj.hourly.direct_normal_irradiance, mode: "lines", name: 'Sonce [' + obj.hourly_units.direct_normal_irradiance + ']', line: { color: sonColor } }
             ];
 
-            //Define Layout
-            const layout = {
-                title: "Vremenska napoved na trenutni lokaciji (" + obj.elevation + " m.n.v.)",
+            const layout1 = {
+                title: "Temperatura in Obsevanje",
                 xaxis: { title: "Čas" },
-                yaxis: {
-                    tickfont: { color: tempColor }
-                },
-                yaxis2: {
-                    tickfont: { color: sonColor },
-                    showgrid: false,
-                    overlaying: 'y',
-                    side: 'right'
-                },
-                yaxis3: {
-                    tickfont: { color: veterColor },
-                    range: [0, max_wind],
-                    showgrid: false,
-                    overlaying: 'y',
-                    position: 0.01
-                },
-                yaxis4: {
-                    tickfont: { color: padavColor },
-                    range: [0, max_precip],
-                    showgrid: false,
-                    overlaying: 'y',
-                    side: 'right',
-                    position: 0.99
-                },
+                yaxis: { title: "Temperatura", tickfont: { color: tempColor } },
+                yaxis2: { title: "Obsevanje", tickfont: { color: sonColor }, overlaying: 'y', side: 'right' },
+                legend: { orientation: "h", y: -0.2 }
             };
-            Plotly.newPlot("myPlot",
-                data,
-                layout, { displayModeBar: true }
-            );
+
+            // Drugi graf (Veter in Padavine)
+            const data2 = [
+                { x: hourly_times, y: obj.hourly.wind_speed_10m, mode: "lines", name: 'Hitrost vetra [' + obj.hourly_units.wind_speed_10m + ']', line: { color: veterColor } },
+                { x: hourly_times, y: obj.hourly.precipitation, type: "bar", name: 'Padavine [' + obj.hourly_units.precipitation + ']', marker: { color: padavColor }, opacity: 0.5 }
+            ];
+
+            const layout2 = {
+                title: "Hitrost vetra in Padavine",
+                xaxis: { title: "Čas" },
+                yaxis: { title: "Hitrost vetra", tickfont: { color: veterColor } },
+                yaxis2: { title: "Padavine", tickfont: { color: padavColor }, overlaying: 'y', side: 'right' },
+                legend: { orientation: "h", y: -0.2 }
+            };
+
+            Plotly.newPlot("plot1", data1, layout1, { displayModeBar: true });
+            Plotly.newPlot("plot2", data2, layout2, { displayModeBar: true });
         }
 
         function showError(error) {
             switch (error.code) {
                 case error.PERMISSION_DENIED:
-                    x.innerHTML = "User denied the request for Geolocation."
+                    x.innerHTML = "User denied the request for Geolocation.";
                     break;
                 case error.POSITION_UNAVAILABLE:
-                    x.innerHTML = "Location information is unavailable."
+                    x.innerHTML = "Location information is unavailable.";
                     break;
                 case error.TIMEOUT:
-                    x.innerHTML = "The request to get user location timed out."
+                    x.innerHTML = "The request to get user location timed out.";
                     break;
                 case error.UNKNOWN_ERROR:
-                    x.innerHTML = "An unknown error occurred."
+                    x.innerHTML = "An unknown error occurred.";
                     break;
             }
         }
+
         getLocation();
     </script>
 </body>
-
 </html>
