@@ -3,25 +3,108 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="keywords" content="Vreme, DWD D2">
+    <meta name="description" content="Lokalna vremenska napoved">
+    <meta name="author" content="Anže Marinko">
+
+    <link rel="icon" type="image/x-icon" href="vreme/favicon_io/favicon.ico">
+	<meta name="theme-color" content="#87b1f8">
+	<link rel="apple-touch-icon" sizes="180x180" href="vreme/favicon_io/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="vreme/favicon_io/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="vreme/favicon_io/favicon-16x16.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="vreme/favicon_io/android-chrome-192x192.png">
+	<link rel="icon" type="image/png" sizes="512x512" href="vreme/favicon_io/android-chrome-512x512.png">
+	<link rel="manifest" href="vreme/favicon_io/site.webmanifest">
+	<link rel="shortcut icon" href="vreme/favicon_io/favicon.ico">
+	<meta name="msapplication-TileColor" content="#323F47">
+
+	<!-- Facebook Meta Tags -->
+	<meta property="og:title" content="Vreme">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://anzemarinko.github.io/vreme">
+	<meta property="og:image" content="https://anzemarinko.github.io/vreme/favicon_io/android-chrome-512x512.png">
+	<meta property="og:site_name" content="Vreme">
+	<meta property="og:description" content="Lokalna vremenska napoved">
+
+	<!-- Twitter Meta Tags -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta property="twitter:domain" content="anzemarinko.github.io">
+	<meta property="twitter:url" content="https://anzemarinko.github.io/vreme">
+	<meta name="twitter:title" content="Vreme">
+	<meta name="twitter:description" content="Lokalna vremenska napoved">
+	<meta name="twitter:image" content="https://anzemarinko.github.io/vreme/favicon_io/android-chrome-512x512.png">
+
     <title>Vreme</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background-color: #87b1f8;
+            text-align: center;
+        }
+
+        #demo {
+            font-size: 10px;
+        }
+
+        h2 {
+            color: #034a80;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            color: #0169b8;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 5px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .graph {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        #radar img {
+            width: 95%;
+            max-width: 600px;
+            border-radius: 15px;
+        }
+
+        #sun p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="demo"></div><br>
-    <div id="plot1" style="width:100%;"></div>
-    <div id="plot2" style="width:100%;"></div>
-    <div id="radarImage" style="width:100%; text-align:center; margin-top:20px;">
-        <h3>Radarska slika padavin</h3>
-        <img id="radar" src="https://meteo.arso.gov.si/uploads/probase/www/observ/radar/si0-rm-anim.gif" style="width:80%; max-width:600px;">
-    </div>
-    
-    <div id="sunMoon" style="width:100%; text-align:center; margin-top:20px;">
-        <h3>Sončni in lunini podatki</h3>
-        <p id="sunrise"></p>
-        <p id="sunset"></p>
-        <p id="moonphase"></p>
+    <div class="container">
+        <h2>Vremenska Napoved</h2>
+        <div id="demo"></div>
+
+        <div id="sun">
+            <h3>Sonce</h3>
+            <p id="sunrise"></p>
+            <p id="sunset"></p>
+        </div>
+        
+        <div id="plot1" class="graph"></div>
+        <div id="plot2" class="graph"></div>
+
+        <div id="radar">
+            <h3>Radarska slika padavin</h3>
+            <img src="https://meteo.arso.gov.si/uploads/probase/www/observ/radar/si0-rm-anim.gif">
+        </div>
     </div>
 
     <script>
@@ -89,7 +172,7 @@
             ];
 
             const layout1 = {
-                title: "Temperatura in Obsevanje",
+                title: "Temperatura in sonce",
                 xaxis: { 
                     title: "Čas", 
                     range: [currentTime, endDate],
@@ -103,7 +186,7 @@
                     showline: true,
                     fixedrange: true },
                 yaxis2: { 
-                    title: "Obsevanje", 
+                    title: "Sonce", 
                     tickfont: { color: sonColor }, 
                     overlaying: 'y', 
                     side: 'right', 
@@ -123,7 +206,7 @@
             ];
 
             const layout2 = {
-                title: "Hitrost vetra in Padavine",
+                title: "Hitrost vetra in padavine",
                 xaxis: { 
                     title: "Čas", 
                     range: [currentTime, endDate],
@@ -159,8 +242,8 @@
             Plotly.newPlot("plot1", data1, layout1, layoutOptions);
             Plotly.newPlot("plot2", data2, layout2, layoutOptions);
 
-            document.getElementById("sunrise").innerHTML = `Sončni vzhod: ${obj.daily.sunrise[0].split('T')[1]}`;
-            document.getElementById("sunset").innerHTML = `Sončni zahod: ${obj.daily.sunset[0].split('T')[1]}`;
+            document.getElementById("sunrise").innerHTML = `Vzhod: ${obj.daily.sunrise[0].split('T')[1]}`;
+            document.getElementById("sunset").innerHTML = `Zahod: ${obj.daily.sunset[0].split('T')[1]}`;
         }
 
         getLocation();
