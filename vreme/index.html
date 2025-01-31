@@ -89,7 +89,7 @@
 
 <body>
     <div class="container">
-        <h2>Vremenska Napoved</h2>
+        <h2>Vreme</h2>
         <div id="demo"></div>
 
         <div id="sun">
@@ -98,8 +98,11 @@
             <p id="sunset"></p>
         </div>
         
-        <div id="plot1" class="graph"></div>
-        <div id="plot2" class="graph"></div>
+        <div id="grafi">
+            <h3>Napoved</h3>
+            <div id="plot1" class="graph"></div>
+            <div id="plot2" class="graph"></div>
+        </div>
 
         <div id="radar">
             <h3>Radarska slika padavin</h3>
@@ -197,10 +200,10 @@
                 dragmode: 'pan',  // Set pan as default mode
                 spikedistance: -1, // Enables global spike lines
                 margin: {
-                    t: 30,  // Top margin
-                    b: 30,  // Bottom margin
-                    l: 30,  // Left margin
-                    r: 30,  // Right margin
+                    t: 40,  // Top margin
+                    b: 40,  // Bottom margin
+                    l: 40,  // Left margin
+                    r: 40,  // Right margin
                 },
                 autosize: true,
             };
@@ -239,10 +242,10 @@
                 spikedistance: -1, // Enables global spike lines
 
                 margin: {
-                    t: 30,  // Top margin
-                    b: 30,  // Bottom margin
-                    l: 30,  // Left margin
-                    r: 30,  // Right margin
+                    t: 40,  // Top margin
+                    b: 40,  // Bottom margin
+                    l: 40,  // Left margin
+                    r: 40,  // Right margin
                 },
                 autosize: true,
             };
