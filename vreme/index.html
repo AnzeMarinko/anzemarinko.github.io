@@ -9,12 +9,19 @@
 </head>
 
 <body>
-    <div id="demo"></div></br>
+    <div id="demo"></div><br>
     <div id="plot1" style="width:100%;"></div>
     <div id="plot2" style="width:100%;"></div>
     <div id="radarImage" style="width:100%; text-align:center; margin-top:20px;">
         <h3>Radarska slika padavin</h3>
         <img id="radar" src="https://meteo.arso.gov.si/uploads/probase/www/observ/radar/si0-rm-anim.gif" style="width:80%; max-width:600px;">
+    </div>
+    
+    <div id="sunMoon" style="width:100%; text-align:center; margin-top:20px;">
+        <h3>Sončni in lunini podatki</h3>
+        <p id="sunrise"></p>
+        <p id="sunset"></p>
+        <p id="moonphase"></p>
     </div>
 
     <script>
@@ -39,6 +46,7 @@
             localStorage.setItem("lastLatitude", latitude);
             localStorage.setItem("lastLongitude", longitude);
             fetchWeather(latitude, longitude);
+            fetchSunMoon(latitude, longitude);
         }
 
         function useLastKnownPosition() {
@@ -46,6 +54,7 @@
             const lastLongitude = localStorage.getItem("lastLongitude");
             if (lastLatitude && lastLongitude) {
                 fetchWeather(lastLatitude, lastLongitude);
+                fetchSunMoon(lastLatitude, lastLongitude);
                 x.innerHTML = "Uporabljena zadnja znana lokacija.";
             } else {
                 x.innerHTML = "Geolocation ni na voljo in ni shranjene lokacije.";
@@ -61,7 +70,7 @@
 
         function fetchWeather(latitude, longitude) {
             const response = httpGet("https://api.open-meteo.com/v1/dwd-icon?latitude=" + latitude +
-                "&longitude=" + longitude + "&hourly=temperature_2m,precipitation,wind_speed_10m,direct_normal_irradiance&timezone=Europe%2FBerlin&past_days=3&forecast_days=8");
+                "&longitude=" + longitude + "&hourly=temperature_2m,precipitation,wind_speed_10m,direct_normal_irradiance&daily=sunrise,sunset&timezone=Europe%2FBerlin&past_days=3&forecast_days=8");
             const obj = JSON.parse(response);
             let hourly_times = obj.hourly.time.map(datetime => new Date(datetime));
 
@@ -105,6 +114,9 @@
 
             Plotly.newPlot("plot1", data1, layout1, { displayModeBar: true });
             Plotly.newPlot("plot2", data2, layout2, { displayModeBar: true });
+
+            document.getElementById("sunrise").innerHTML = `Sončni vzhod: ${obj.daily.sunrise[0].split('T')[1]}`;
+            document.getElementById("sunset").innerHTML = `Sončni zahod: ${obj.daily.sunset[0].split('T')[1]}`;
         }
 
         getLocation();
