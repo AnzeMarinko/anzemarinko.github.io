@@ -106,6 +106,14 @@ iframe {
     display: block;         /* Poskrbimo, da pokriva celoten gumb */
 }
 
+/* Stil vprašajčka */
+.tooltip {
+    cursor: help;
+    margin-left: 5px;
+    font-size: 1.2em;
+    color: #ffcc00;
+}
+
 /* Gumb za brisanje kanala */
 .remove-btn {
     background-color: red;

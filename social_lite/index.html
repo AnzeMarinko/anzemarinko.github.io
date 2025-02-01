@@ -44,26 +44,25 @@
             <div id="youtube-channels" class="channels"></div>
 
             <div class="nastavitve">
-                <!-- Vnos API ključa z dodatnimi navodili -->
+                <!-- Vnos API ključa -->
                 <div class="api-input">
                     <input type="password" id="apiKeyInput" 
-                        placeholder="🔑 Vnesite svoj Google API ključ ..." 
-                        title="API ključ je potreben za pridobivanje videov s kanalov. V Google Cloud console morate omogočiti YouTube Data API v3.">
+                        placeholder="🔑 Vnesite svoj Google API ključ ..." >
                     <button onclick="saveApiKey()" title="Shrani API ključ v brskalnik">💾 Shrani ključ</button>
                     <button onclick="clearApiKey()" title="Odstrani API ključ iz brskalnika">🗑️ Počisti ključ</button>
-                    <small>API ključ je shranjen samo v vašem brskalniku.</small>
+                    <span class="tooltip" title="API ključ je potreben za pridobivanje videov. V Google Cloud console morate omogočiti YouTube Data API v3. API ključ je varno shranjen samo v vašem brskalniku.">❓</span>
                 </div>
 
-                <!-- Dodajanje kanalov z dodatnimi navodili -->
+                <!-- Vnos YouTube Channel ID -->
                 <div class="channel-input">
                     <input type="text" id="channelIdInput" 
-                        placeholder="📺 Vnesite ID YouTube kanala ..." 
-                        title="Poiščite ID kanala, ki ga želite spremljati.">
+                        placeholder="📺 Vnesite ID YouTube kanala ...">
                     <button onclick="addChannel()" title="Dodaj izbran YouTube kanal">➕ Dodaj kanal</button>
                     <button title="Povezava do iskalnika ID-jev (zunanja povezava)">
                         <a href="https://www.tunepocket.com/youtube-channel-id-finder/#channle-id-finder-form">🔍 Iskalnik ID-jev</a>
                     </button>
-                    <small>ID kanala najdete na povezavi ali v URL-ju kanala.</small>
+
+                    <span class="tooltip" title="Poiščite ID kanala, ki ga želite spremljati. ID kanala najdete na povezavi ali v URL-ju kanala.">❓</span>
                 </div>
             </div>
         </div>
