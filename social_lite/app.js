@@ -3,14 +3,14 @@ const channelsDiv = document.getElementById("channels");
 
 // Pridobi API ključ iz LocalStorage
 function getApiKey() {
-    return localStorage.getItem("youtubeApiKey");
+    return localStorage.getItem("googleApiKey");
 }
 
 // Shrani API ključ v LocalStorage
 function saveApiKey() {
     const apiKey = document.getElementById("apiKeyInput").value;
     if (apiKey) {
-        localStorage.setItem("youtubeApiKey", apiKey);
+        localStorage.setItem("googleApiKey", apiKey);
         alert("API ključ shranjen!");
         fetchVideos();
     }
@@ -18,7 +18,7 @@ function saveApiKey() {
 
 // Počisti API ključ
 function clearApiKey() {
-    localStorage.removeItem("youtubeApiKey");
+    localStorage.removeItem("googleApiKey");
     alert("API ključ odstranjen!");
     location.reload();
 }
