@@ -8,36 +8,99 @@
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
-            margin: 40px;
+            margin: 0;
             background-color: #f4f4f4;
             color: #333;
         }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
         h1, h2, h3, h4 {
             color: #0077cc;
+            text-align: center;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background: #0077cc;
+            color: white;
+            border-radius: 5px;
+            margin: 0 5px;
+        }
+        .tab:hover {
+            background: #0056b3;
+        }
+        .content {
+            display: none;
+        }
+        .content.active {
+            display: block;
+        }
+        .project img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
         }
         a {
             color: #0056b3;
             text-decoration: none;
+            font-weight: bold;
         }
         a:hover {
             text-decoration: underline;
         }
     </style>
+    <script>
+        function showTab(tabName) {
+            let contents = document.querySelectorAll('.content');
+            contents.forEach(content => content.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+        }
+    </script>
 </head>
 <body>
-    <h1>Anže Marinko</h1>
-    <h2>Moji projekti</h2>
-    
-    <h3>Igre</h3>
-    <h4><a href="https://anzemarinko.github.io/pod_krinko/" target="_blank">Pod krinko</a></h4>
-    <p>Slovenska različica besedne družabne igre Undercover za 3-20 igralcev (priporočeno vsaj 4).</p>
-    
-    <h3>Pripomočki</h3>
-    <h4><a href="https://anzemarinko.github.io/vreme/" target="_blank">Vreme</a></h4>
-    <p>Lokalna vremenska napoved za naslednji teden (vključuje tudi dva dni zgodovine) in radarska slika padavin.</p>
-    
-    <h4><a href="https://anzemarinko.github.io/social_lite/" target="_blank">SociaLite</a></h4>
-    <p>Program, ki pomaga pri zmernejši uporabi družabnih omrežij z omejevanjem na manjše število zadnjih objav le za izbrane kanale/profile. Trenutno je podprta le uporaba YouTube-a.</p>
-    <img src="social_lite/social_lite_horse.jpg">
+    <div class="container">
+        <h1>Anže Marinko</h1>
+        <h2>Moji projekti</h2>
+        
+        <div class="tabs">
+            <div class="tab" onclick="showTab('igre')">Igre</div>
+            <div class="tab" onclick="showTab('pripomocki')">Pripomočki</div>
+        </div>
+        
+        <div id="igre" class="content active">
+            <h3>Igre</h3>
+            <div class="project">
+                <img src="https://via.placeholder.com/800x400" alt="Pod krinko">
+                <h4><a href="https://anzemarinko.github.io/pod_krinko/" target="_blank">Pod krinko</a></h4>
+                <p>Slovenska različica besedne družabne igre Undercover za 3-20 igralcev (priporočeno vsaj 4).</p>
+            </div>
+        </div>
+        
+        <div id="pripomocki" class="content">
+            <h3>Pripomočki</h3>
+            <div class="project">
+                <img src="https://via.placeholder.com/800x400" alt="Vreme">
+                <h4><a href="https://anzemarinko.github.io/vreme/" target="_blank">Vreme</a></h4>
+                <p>Lokalna vremenska napoved za naslednji teden (vključuje tudi dva dni zgodovine) in radarska slika padavin.</p>
+            </div>
+            <div class="project">
+                <img src="social_lite/social_lite_horse.jpg" alt="SociaLite">
+                <h4><a href="https://anzemarinko.github.io/social_lite/" target="_blank">SociaLite</a></h4>
+                <p>Program, ki pomaga pri zmernejši uporabi družabnih omrežij z omejevanjem na manjše število zadnjih objav le za izbrane kanale/profile. Trenutno je podprta le uporaba YouTube-a.</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
