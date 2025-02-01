@@ -2,28 +2,62 @@
 <html lang="sl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="keywords" content="Družabna omrežja, Digitalni minimalizem, Odnosi">
+    <meta name="description" content="Program za omejitev družabnih omrežij na izbran nabor kanalov/profilov">
+    <meta name="author" content="Anže Marinko">
     <title>SociaLite</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
+	<meta name="theme-color" content="#121212">
+	<link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="favicon_io/android-chrome-192x192.png">
+	<link rel="icon" type="image/png" sizes="512x512" href="favicon_io/android-chrome-512x512.png">
+	<link rel="manifest" href="favicon_io/site.webmanifest">
+	<link rel="shortcut icon" href="favicon_io/favicon.ico">
+	<meta name="msapplication-TileColor" content="#121212">
+   
+    <!-- Facebook Meta Tags -->
+    <meta property="og:title" content="SociaLite">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://anzemarinko.github.io/social_lite">
+    <meta property="og:image" content="https://anzemarinko.github.io/social_lite/favicon_io/android-chrome-512x512.png">
+    <meta property="og:site_name" content="SociaLite">
+    <meta property="og:description" content="Program za omejitev družabnih omrežij na izbran nabor kanalov/profilov">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="anzemarinko.github.io">
+    <meta property="twitter:url" content="https://anzemarinko.github.io/social_lite">
+    <meta name="twitter:title" content="SociaLite">
+    <meta name="twitter:description" content="Program za omejitev družabnih omrežij na izbran nabor kanalov/profilov">
+    <meta name="twitter:image" content="https://anzemarinko.github.io/social_lite/favicon_io/android-chrome-512x512.png">
 </head>
 <body>
     <div class="container">
-        <h1>▶️ YouTube Lite</h1>
+        <div id="youtube" class="social-platform">
+            <h1>▶️ YouTube Lite</h1>
 
-        <div id="channels"></div>
+            <div id="youtube-channels" class="channels"></div>
 
-        <!-- Vnos API ključa -->
-        <div class="api-input">
-            <input type="password" id="apiKeyInput" placeholder="Vnesi Google API ključ z omogočenim YouTube API-jem">
-            <button onclick="saveApiKey()">Shrani ključ</button>
-            <button onclick="clearApiKey()">Počisti ključ</button>
-        </div>
+            <div class="nastavitve">
+                <!-- Vnos API ključa -->
+                <div class="api-input">
+                    <input type="password" id="apiKeyInput" placeholder="Vnesi Google API ključ z omogočenim YouTube API-jem">
+                    <button onclick="saveApiKey()">Shrani ključ</button>
+                    <button onclick="clearApiKey()">Počisti ključ</button>
+                </div>
 
-        <!-- Dodajanje novih kanalov -->
-        <div class="channel-input">
-            <input type="text" id="channelIdInput" placeholder="Vnesi YouTube Channel ID">
-            <button onclick="addChannel()">Dodaj kanal</button>
-            <button><a href="https://www.tunepocket.com/youtube-channel-id-finder/#channle-id-finder-form">Iskalnik ID-jev</a></button>
+                <!-- Dodajanje novih kanalov -->
+                <div class="channel-input">
+                    <input type="text" id="channelIdInput" placeholder="Vnesi YouTube Channel ID">
+                    <button onclick="addChannel()">Dodaj kanal</button>
+                    <button><a href="https://www.tunepocket.com/youtube-channel-id-finder/#channle-id-finder-form">Iskalnik ID-jev</a></button>
+                </div>
+            </div>
         </div>
     </div>
 

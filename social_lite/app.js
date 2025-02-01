@@ -1,5 +1,5 @@
 const MAX_RESULTS = 3;
-const channelsDiv = document.getElementById("channels");
+const youtubeChannelsDiv = document.getElementById("youtube-channels");
 
 // Pridobi API ključ iz LocalStorage
 function getApiKey() {
@@ -95,7 +95,7 @@ async function fetchVideos() {
         return;
     }
 
-    channelsDiv.innerHTML = ""; // Počisti stare rezultate
+    youtubeChannelsDiv.innerHTML = ""; // Počisti stare rezultate
     const channels = getChannels();
 
     for (const channel of channels) {
@@ -150,7 +150,7 @@ function displayVideos(channel, videos) {
     });
 
     channelElement.appendChild(videoRow);
-    channelsDiv.appendChild(channelElement);
+    youtubeChannelsDiv.appendChild(channelElement);
 }
 
 // Ob zagonu naloži shranjene kanale
