@@ -126,7 +126,7 @@ function displayVideos(channel, videos) {
 
     // Naslov kanala + gumb za brisanje
     const title = document.createElement("h2");
-    title.innerHTML = `${channel.name} <button class="remove-btn" onclick="removeChannel('${channel.id}')">🗑️</button>`;
+    title.innerHTML = `${channel.name} <button class="remove-btn" title="Odstrani kanal" onclick="removeChannel('${channel.id}')">🗑️</button>`;
     channelElement.appendChild(title);
 
     // Vrstica videov

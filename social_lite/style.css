@@ -100,6 +100,12 @@ iframe {
     background-color: #cc5200;
 }
 
+.nastavitve a {
+    text-decoration: none;  /* Odstrani podčrtavo */
+    color: inherit;         /* Ohranimo privzeto barvo gumba */
+    display: block;         /* Poskrbimo, da pokriva celoten gumb */
+}
+
 /* Gumb za brisanje kanala */
 .remove-btn {
     background-color: red;
