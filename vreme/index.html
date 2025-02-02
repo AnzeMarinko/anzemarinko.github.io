@@ -179,7 +179,7 @@
             const currentTime = new Date();
 
             const endDate = new Date(currentTime);
-            endDate.setDate(endDate.getDate() + 3);
+            endDate.setDate(endDate.getDate() + 2);
 
             // Prvi graf (Temperatura in Obsevanje)
             const data = [
@@ -197,15 +197,19 @@
                     range: [currentTime, endDate],
                     fixedrange: false, 
                     showspikes: true,
-                    showline: true },
+                    showgrid: true,
+                    showline: true
+                 },
                 yaxis: { 
-                    title: "Temperatura",
+                    // title: "Temperatura",
                     tickfont: { color: tempColor },
                     showspikes: true,
                     showline: true,
-                    fixedrange: true },
+                    showgrid: false,
+                    fixedrange: true
+                },
                 yaxis2: { 
-                    title: "Sonce", 
+                    // title: "Sonce", 
                     tickfont: { color: sonColor }, 
                     overlaying: 'y', 
                     side: 'right', 
@@ -213,20 +217,22 @@
                     showline: true,
                     fixedrange: true },
                 yaxis3: { 
-                    title: "Hitrost vetra",
+                    // title: "Hitrost vetra",
                     tickfont: { color: veterColor },
                     overlaying: 'y', 
                     side: 'left',
-                    position: 0.05,
+                    position: 0.03,
                     showspikes: true,
                     showline: true,
+                    showgrid: false,
                     fixedrange: true },
                 yaxis4: { 
-                    title: "Padavine", 
+                    // title: "Padavine", 
                     tickfont: { color: padavColor }, 
                     overlaying: 'y', 
                     side: 'right', 
-                    position: 0.95,
+                    position: 0.97,
+                    showgrid: false,
                     showspikes: true,
                     showline: true,
                     fixedrange: true },
