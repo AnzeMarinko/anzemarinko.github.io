@@ -8,15 +8,15 @@
     <meta name="description" content="Lokalna vremenska napoved">
     <meta name="author" content="Anže Marinko">
 
-    <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="https://anzemarinko.github.io/vreme/favicon_io/favicon.ico">
 	<meta name="theme-color" content="#87b1f8">
-	<link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
-	<link rel="icon" type="image/png" sizes="192x192" href="favicon_io/android-chrome-192x192.png">
-	<link rel="icon" type="image/png" sizes="512x512" href="favicon_io/android-chrome-512x512.png">
-	<link rel="manifest" href="favicon_io/site.webmanifest">
-	<link rel="shortcut icon" href="favicon_io/favicon.ico">
+	<link rel="apple-touch-icon" sizes="180x180" href="https://anzemarinko.github.io/vreme/favicon_io/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="https://anzemarinko.github.io/vreme/favicon_io/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="https://anzemarinko.github.io/vreme/favicon_io/favicon-16x16.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="https://anzemarinko.github.io/vreme/favicon_io/android-chrome-192x192.png">
+	<link rel="icon" type="image/png" sizes="512x512" href="https://anzemarinko.github.io/vreme/favicon_io/android-chrome-512x512.png">
+	<link rel="manifest" href="https://anzemarinko.github.io/vreme/favicon_io/site.webmanifest">
+	<link rel="shortcut icon" href="https://anzemarinko.github.io/vreme/favicon_io/favicon.ico">
 	<meta name="msapplication-TileColor" content="#323F47">
 
 	<!-- Facebook Meta Tags -->
@@ -26,14 +26,6 @@
 	<meta property="og:image" content="https://anzemarinko.github.io/vreme/favicon_io/android-chrome-512x512.png">
 	<meta property="og:site_name" content="Vreme">
 	<meta property="og:description" content="Lokalna vremenska napoved">
-
-	<!-- Twitter Meta Tags -->
-	<meta name="twitter:card" content="summary_large_image">
-	<meta property="twitter:domain" content="anzemarinko.github.io">
-	<meta property="twitter:url" content="https://anzemarinko.github.io/vreme">
-	<meta name="twitter:title" content="Vreme">
-	<meta name="twitter:description" content="Lokalna vremenska napoved">
-	<meta name="twitter:image" content="https://anzemarinko.github.io/vreme/favicon_io/android-chrome-512x512.png">
 
     <title>Vreme</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -92,16 +84,27 @@
             margin: 5px 0;
             font-size: 16px;
         }
+
+        footer a {
+            text-decoration: none;  /* Odstrani podčrtavo */
+            color: #034a80;         /* Ohranimo privzeto barvo gumba */
+            display: block;         /* Poskrbimo, da pokriva celoten gumb */
+        }
+
+        .refresh {
+            cursor: pointer;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
         <h1>Vreme</h1>
+        
         <div id="demo"></div>
         
         <div id="grafi">
-            <h3>Napoved</h3>
+            <h3>Napoved <span class="refresh" onclick="location.reload()" title="Osveži stran">🔄</span></h3>
             <div id="plot1" class="graph"></div>
             <div id="plot2" class="graph"></div>
         </div>
@@ -117,6 +120,10 @@
             <img src="https://meteo.arso.gov.si/uploads/probase/www/observ/radar/si0-rm-anim.gif">
         </div>
     </div>
+
+    <footer>
+        <p>Anže Marinko <a href="https://anzemarinko.github.io">anzemarinko.github.io</a></p>
+    </footer>
 
     <script>
         const x = document.getElementById("demo");

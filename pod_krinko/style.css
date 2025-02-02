@@ -460,3 +460,13 @@ input {
 progress {
     width: 80%;
 }
+
+footer {
+    text-align: center;
+}
+
+footer a {
+    text-decoration: none;  /* Odstrani podčrtavo */
+    color: var(--gospod-v-belem);         /* Ohranimo privzeto barvo gumba */
+    display: block;         /* Poskrbimo, da pokriva celoten gumb */
+}
