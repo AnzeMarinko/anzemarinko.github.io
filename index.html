@@ -58,6 +58,10 @@
             border-bottom: 1px solid #ccc;
             cursor: pointer;
         }
+        .project img {
+            max-width: 500px;
+            width: 90%;
+        }
         .project img.logo {
             width: 30px;
             vertical-align: middle;
@@ -67,11 +71,25 @@
             margin-left: 10px;
         }
         .project .description {
-            display: none;
-            padding-top: 10px;
+            max-height: 3.2em;
+            overflow: hidden;
+            position: relative;
+            transition: max-height 0.3s ease-in-out;
+        }
+        .project .description::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1.6em;
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, white 100%);
         }
         .project.expanded .description {
-            display: block;
+            max-height: none;
+        }
+        .project.expanded .description::after {
+            display: none;
         }
     </style>
     <script>
