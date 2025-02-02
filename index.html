@@ -70,11 +70,32 @@
             display: inline;
             margin-left: 10px;
         }
+        .project .category {
+            font-size: 0.9em;
+            font-weight: bold;
+            padding: 3px 6px;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        .pripomocek {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .igra {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
         .project .description {
             max-height: 3.2em;
             overflow: hidden;
             position: relative;
             transition: max-height 0.3s ease-in-out;
+        }
+        .project .description p {
+            margin: 0;
+            line-clamp: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .project .description::after {
             content: "";
@@ -87,6 +108,9 @@
         }
         .project.expanded .description {
             max-height: none;
+        }
+        .project.expanded .description p {
+            line-clamp: unset;
         }
         .project.expanded .description::after {
             display: none;
@@ -116,6 +140,7 @@
             <h2>Projekti</h2>
             <div id="socialite" class="project" onclick="toggleProject('socialite')">
                 <h3><img class="logo" src="social_lite/favicon_io/android-chrome-512x512.png" alt="SociaLite"> SociaLite</h3>
+                <span class="category pripomocek">🛠 Pripomoček</span>
                 <div class="description">
                     <p>Program za zmernejšo uporabo družabnih omrežij z omejitvijo prikazanih objav. Podprta je uporaba YouTube-a.</p>
                     <img src="social_lite/social_lite_horse.jpg" alt="SociaLite">
@@ -124,6 +149,7 @@
             
             <div id="vreme" class="project" onclick="toggleProject('vreme')">
                 <h3><img class="logo" src="vreme/favicon_io/android-chrome-512x512.png" alt="Vreme"> Vreme</h3>
+                <span class="category pripomocek">🛠 Pripomoček</span>
                 <div class="description">
                     <p>Lokalna vremenska napoved za naslednji teden in radarska slika padavin.</p>
                 </div>
@@ -131,6 +157,7 @@
             
             <div id="pod_krinko" class="project" onclick="toggleProject('pod_krinko')">
                 <h3><img class="logo" src="pod_krinko/favicon_io/android-chrome-512x512.png" alt="Pod krinko"> Pod krinko</h3>
+                <span class="category igra">🎮 Igra</span>
                 <div class="description">
                     <p>Slovenska različica igre Undercover za 3-20 igralcev.</p>
                 </div>
