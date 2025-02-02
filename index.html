@@ -29,10 +29,10 @@
             color: white;
             border-radius: 10px 10px 0 0;
         }
-        .tabs, .sub-tabs {
+        .tabs {
             display: flex;
         }
-        .tab, .sub-tab {
+        .tab {
             padding: 10px 20px;
             cursor: pointer;
             background: white;
@@ -42,46 +42,45 @@
             margin-left: 10px;
             font-weight: bold;
         }
-        .tab:hover, .sub-tab:hover {
+        .tab:hover {
             background: #0056b3;
             color: white;
         }
-        .content, .sub-content {
+        .content {
             display: none;
             padding-top: 20px;
         }
-        .content.active, .sub-content.active {
+        .content.active {
             display: block;
         }
-        .project img {
-            width: 100%;
-            max-width: 500px;
-            height: auto;
-            border-radius: 5px;
-            margin-bottom: 10px;
+        .project {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            cursor: pointer;
         }
-        a {
-            color: #0056b3;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        .project .logo {
+        .project img.logo {
             width: 30px;
+            vertical-align: middle;
+        }
+        .project h3 {
+            display: inline;
+            margin-left: 10px;
+        }
+        .project .description {
+            display: none;
+            padding-top: 10px;
+        }
+        .project.expanded .description {
+            display: block;
         }
     </style>
     <script>
         function showTab(tabName) {
-            let contents = document.querySelectorAll('.content');
-            contents.forEach(content => content.classList.remove('active'));
+            document.querySelectorAll('.content').forEach(content => content.classList.remove('active'));
             document.getElementById(tabName).classList.add('active');
         }
-        function showSubTab(subTabName) {
-            let subContents = document.querySelectorAll('.sub-content');
-            subContents.forEach(subContent => subContent.classList.remove('active'));
-            document.getElementById(subTabName).classList.add('active');
+        function toggleProject(projectId) {
+            document.getElementById(projectId).classList.toggle('expanded');
         }
     </script>
 </head>
@@ -90,40 +89,39 @@
         <div class="header">
             <h1>Anže Marinko</h1>
             <div class="tabs">
-                <button class="tab" onclick="showTab('pripomocki')">Pripomočki</button>
-                <button class="tab" onclick="showTab('igre')">Igre</button>
+                <button class="tab" onclick="showTab('projekti')">Projekti</button>
+                <button class="tab" onclick="showTab('o_meni')">O meni</button>
             </div>
         </div>
         
-        <div id="pripomocki" class="content active">
-            <h2>Pripomočki</h2>
-            <div class="sub-tabs">
-                <button class="sub-tab" onclick="showSubTab('socialite')">SociaLite</button>
-                <button class="sub-tab" onclick="showSubTab('vreme')">Vreme</button>
-            </div>
-            
-            <div id="socialite" class="sub-content active">
-                <div class="project">
-                    <h3><a href="https://anzemarinko.github.io/social_lite/" target="_blank"><img class="logo" src="social_lite/favicon_io/android-chrome-512x512.png" alt="SociaLite"> SociaLite</a></h3>
-                    <p>Program, ki pomaga pri zmernejši uporabi družabnih omrežij z omejevanjem na manjše število zadnjih objav le za izbrane kanale/profile. Trenutno je podprta le uporaba YouTube-a.</p>
+        <div id="projekti" class="content active">
+            <h2>Projekti</h2>
+            <div id="socialite" class="project" onclick="toggleProject('socialite')">
+                <h3><img class="logo" src="social_lite/favicon_io/android-chrome-512x512.png" alt="SociaLite"> SociaLite</h3>
+                <div class="description">
+                    <p>Program za zmernejšo uporabo družabnih omrežij z omejitvijo prikazanih objav. Podprta je uporaba YouTube-a.</p>
                     <img src="social_lite/social_lite_horse.jpg" alt="SociaLite">
                 </div>
             </div>
             
-            <div id="vreme" class="sub-content">
-                <div class="project">
-                    <h3><a href="https://anzemarinko.github.io/vreme/" target="_blank"><img class="logo" src="vreme/favicon_io/android-chrome-512x512.png" alt="Vreme"> Vreme</a></h3>
-                    <p>Lokalna vremenska napoved za naslednji teden (vključuje tudi dva dni zgodovine) in radarska slika padavin.</p>
+            <div id="vreme" class="project" onclick="toggleProject('vreme')">
+                <h3><img class="logo" src="vreme/favicon_io/android-chrome-512x512.png" alt="Vreme"> Vreme</h3>
+                <div class="description">
+                    <p>Lokalna vremenska napoved za naslednji teden in radarska slika padavin.</p>
+                </div>
+            </div>
+            
+            <div id="pod_krinko" class="project" onclick="toggleProject('pod_krinko')">
+                <h3><img class="logo" src="pod_krinko/favicon_io/android-chrome-512x512.png" alt="Pod krinko"> Pod krinko</h3>
+                <div class="description">
+                    <p>Slovenska različica igre Undercover za 3-20 igralcev.</p>
                 </div>
             </div>
         </div>
         
-        <div id="igre" class="content">
-            <h2>Igre</h2>
-            <div class="project">
-                <h3><a href="https://anzemarinko.github.io/pod_krinko/" target="_blank"><img class="logo" src="pod_krinko/favicon_io/android-chrome-512x512.png" alt="Pod krinko"> Pod krinko</a></h3>
-                <p>Slovenska različica besedne družabne igre Undercover za 3-20 igralcev (priporočeno vsaj 4).</p>
-            </div>
+        <div id="o_meni" class="content">
+            <h2>O meni</h2>
+            <p>Sem Anže Marinko, razvijalec programske opreme in ustvarjalec različnih projektov.</p>
         </div>
     </div>
 </body>
