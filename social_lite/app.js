@@ -1,5 +1,4 @@
 const MAX_RESULTS = 3;
-const youtubeChannelsDiv = document.getElementById("youtube-channels");
 
 // Pridobi API ključ iz LocalStorage
 function getApiKey() {
@@ -12,7 +11,7 @@ function saveApiKey() {
     if (apiKey) {
         localStorage.setItem("googleApiKey", apiKey);
         alert("API ključ shranjen!");
-        fetchVideos();
+        location.reload();
     }
 }
 
@@ -25,52 +24,58 @@ function clearApiKey() {
 
 // Pridobi shranjene kanale
 function getChannels() {
-    const storedChannels = localStorage.getItem("youtubeChannels");
-    return storedChannels ? JSON.parse(storedChannels) : [];
+    return JSON.parse(localStorage.getItem("youtubeChannels")) || [];
 }
 
-// Shrani kanale v LocalStorage
+// Pridobi skrite kanale
+function getHiddenChannels() {
+    return JSON.parse(localStorage.getItem("hiddenChannels")) || [];
+}
+
+// Shrani kanale
 function saveChannels(channels) {
     localStorage.setItem("youtubeChannels", JSON.stringify(channels));
+}
+
+// Shrani skrite kanale
+function saveHiddenChannels(hiddenChannels) {
+    localStorage.setItem("hiddenChannels", JSON.stringify(hiddenChannels));
 }
 
 // Dodaj nov kanal
 async function addChannel() {
     const channelId = document.getElementById("channelIdInput").value.trim();
     if (!channelId) {
-        alert("Prosim, vnesi YouTube Channel ID.");
+        alert("Prosim, vnesite ID kanala.");
         return;
     }
 
     const apiKey = getApiKey();
     if (!apiKey) {
-        alert("Prosim, vnesi YouTube API ključ.");
+        alert("Prosim, vnesite API ključ.");
         return;
     }
 
-    // Preverimo, ali je kanal že dodan
     let channels = getChannels();
     if (channels.some(c => c.id === channelId)) {
-        alert("Ta kanal je že dodan.");
+        alert("Kanal je že dodan.");
         return;
     }
 
     try {
-        // 🔍 Pridobi ime kanala iz YouTube API-ja
         const url = `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${apiKey}`;
         const response = await fetch(url);
         const data = await response.json();
 
         if (!data.items || data.items.length === 0) {
-            alert("Ni mogoče najti kanala. Preveri ID.");
+            alert("Kanal ni najden. Preverite ID.");
             return;
         }
 
-        const channelName = data.items[0].snippet.title; // 📌 Pridobi ime kanala
-
-        // Shrani kanal v LocalStorage
+        const channelName = data.items[0].snippet.title;
         channels.push({ id: channelId, name: channelName });
         saveChannels(channels);
+        renderChannelList();
         fetchVideos();
     } catch (error) {
         console.error("Napaka pri pridobivanju imena kanala:", error);
@@ -81,13 +86,25 @@ async function addChannel() {
 
 // Odstrani kanal
 function removeChannel(channelId) {
-    let channels = getChannels();
-    channels = channels.filter(c => c.id !== channelId);
+    let channels = getChannels().filter(c => c.id !== channelId);
     saveChannels(channels);
+    renderChannelList();
     fetchVideos();
 }
 
-// Pridobi YouTube videe za vsak kanal
+// Skrij/Prikaži kanal
+function toggleChannelVisibility(channelId) {
+    let hiddenChannels = getHiddenChannels();
+    if (hiddenChannels.includes(channelId)) {
+        hiddenChannels = hiddenChannels.filter(id => id !== channelId);
+    } else {
+        hiddenChannels.push(channelId);
+    }
+    saveHiddenChannels(hiddenChannels);
+    fetchVideos();
+}
+
+// Pridobi in združi YouTube videe
 async function fetchVideos() {
     const apiKey = getApiKey();
     if (!apiKey) {
@@ -95,13 +112,15 @@ async function fetchVideos() {
         return;
     }
 
-    youtubeChannelsDiv.innerHTML = ""; // Počisti stare rezultate
     const channels = getChannels();
+    const hiddenChannels = getHiddenChannels();
+    let allVideos = [];
 
     for (const channel of channels) {
-        const url = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channel.id}&part=snippet,id&order=date&maxResults=${MAX_RESULTS}`;
+        if (hiddenChannels.includes(channel.id)) continue;
 
         try {
+            const url = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channel.id}&part=snippet,id&order=date&maxResults=${MAX_RESULTS}`;
             const response = await fetch(url);
             const data = await response.json();
 
@@ -110,50 +129,74 @@ async function fetchVideos() {
                 alert(`Napaka pri API klicu: ${data.error.message}`);
                 continue;
             }
-
-            displayVideos(channel, data.items);
+            if (data.items) {
+                const videos = data.items.map(video => ({
+                    id: video.id.videoId,
+                    title: video.snippet.title,
+                    channel: channel.name,
+                    publishedAt: new Date(video.snippet.publishedAt),
+                }));
+                allVideos = allVideos.concat(videos);
+            }
         } catch (error) {
             console.error("Napaka pri pridobivanju videov:", error);
             alert("Napaka pri povezavi na YouTube API.");
         }
     }
+
+    // Razvrsti videe po času objave (najnovejši na vrhu)
+    allVideos.sort((a, b) => b.publishedAt - a.publishedAt);
+    displayVideos(allVideos);
 }
 
-// Prikaz videov v vrstici za posamezen kanal
-function displayVideos(channel, videos) {
-    const channelElement = document.createElement("div");
-    channelElement.classList.add("channel");
-
-    // Naslov kanala + gumb za brisanje
-    const title = document.createElement("h2");
-    title.innerHTML = `${channel.name} <button class="remove-btn" title="Odstrani kanal" onclick="removeChannel('${channel.id}')">🗑️</button>`;
-    channelElement.appendChild(title);
-
-    // Vrstica videov
-    const videoRow = document.createElement("div");
-    videoRow.classList.add("video-row");
+// Prikaz videov v enotnem zidu
+function displayVideos(videos) {
+    const videoWall = document.getElementById("video-wall");
+    videoWall.innerHTML = "";
 
     videos.forEach(video => {
-        if (video.id.videoId) {
-            const videoElement = document.createElement("div");
-            videoElement.classList.add("video");
-            videoElement.innerHTML = `
-                <iframe 
-                    src="https://www.youtube-nocookie.com/embed/${video.id.videoId}?rel=0&modestbranding=1&controls=1&showinfo=0&iv_load_policy=3&fs=1" 
-                    frameborder="0" 
-                    allow="autoplay; encrypted-media" 
-                    allowfullscreen>
-                </iframe>
-            `;
-            videoRow.appendChild(videoElement);
-        }
-    });
+        if (!video.id) return;
 
-    channelElement.appendChild(videoRow);
-    youtubeChannelsDiv.appendChild(channelElement);
+        const videoElement = document.createElement("div");
+        videoElement.classList.add("video");
+        videoElement.innerHTML = `
+            <iframe 
+                src="https://www.youtube-nocookie.com/embed/${video.id}?rel=0&modestbranding=1&controls=1&showinfo=0&iv_load_policy=3&fs=1" 
+                frameborder="0" 
+                allow="autoplay; encrypted-media" 
+                allowfullscreen>
+            </iframe>
+        `;
+        videoWall.appendChild(videoElement);
+    });
 }
 
+// Prikaz dodanih kanalov z možnostjo skrivanja/prikazovanja
+function renderChannelList() {
+    const channelListDiv = document.getElementById("channelList");
+    const channels = getChannels();
+    const hiddenChannels = getHiddenChannels();
+    channelListDiv.innerHTML = "";
+
+    channels.forEach(channel => {
+        const isHidden = hiddenChannels.includes(channel.id);
+
+        const channelDiv = document.createElement("div");
+        channelDiv.classList.add("channel-item");
+        channelDiv.innerHTML = `
+            ${channel.name}
+            <button class="remove-channel" onclick="removeChannel('${channel.id}')">🗑️</button>
+            <button class="${isHidden ? "show" : "hide"}-channel" onclick="toggleChannelVisibility('${channel.id}')">
+                ${isHidden ? "👁️‍🗨️ Prikaži" : "🙈 Skrij"}
+            </button>
+        `;
+        channelListDiv.appendChild(channelDiv);
+    });
+}
+
+
 // Ob zagonu naloži shranjene kanale
+renderChannelList();
 if (getApiKey()) {
     fetchVideos();
 }
@@ -162,3 +205,4 @@ function toggleTooltip(id) {
     const tooltip = document.getElementById(id);
     tooltip.style.display = tooltip.style.display === 'block' ? 'none' : 'block';
 }
+

@@ -34,7 +34,7 @@ h2 {
 }
 
 /* Vrstica videov (POPRAAVLJENO - zdaj so videi v vrstici!) */
-.video-row {
+.video-wall {
     display: flex;
     gap: 15px;
     overflow-x: auto; /* Omogoči vodoravno drsenje */
@@ -83,6 +83,32 @@ iframe {
     border-radius: 5px;
     border: none;
     margin: 5px;
+}
+
+#channelList button {
+    padding: 5px;
+    font-size: 1em;
+    margin-left: 3px;
+    margin-bottom: 2px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff6600;
+    color: white;
+}
+
+.remove-channel {
+    background-color: #ff6600;
+}
+.show-channel {
+    background-color: #ff6600;
+}
+.hide-channel {
+    background-color: #ff6600;
+}
+
+#channelList button:hover {
+    background-color: #cc5200;
 }
 
 .nastavitve button {
