@@ -1,140 +1,40 @@
 <!DOCTYPE html>
 <html lang="sl">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Anže Marinko">
+    <meta name="description" content="Osebna spletna stran">
+    <meta name="author" content="Anže Marinko">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="app.js"></script>
+
+    <link rel="icon" type="image/x-icon" href="https://anzemarinko.github.io/favicon_io/favicon.ico">
+	<meta name="theme-color" content="#87b1f8">
+	<link rel="apple-touch-icon" sizes="180x180" href="https://anzemarinko.github.io/favicon_io/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="https://anzemarinko.github.io/favicon_io/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="https://anzemarinko.github.io/favicon_io/favicon-16x16.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="https://anzemarinko.github.io/favicon_io/android-chrome-192x192.png">
+	<link rel="icon" type="image/png" sizes="512x512" href="https://anzemarinko.github.io/favicon_io/android-chrome-512x512.png">
+	<link rel="manifest" href="https://anzemarinko.github.io/favicon_io/site.webmanifest">
+	<link rel="shortcut icon" href="https://anzemarinko.github.io/favicon_io/favicon.ico">
+	<meta name="msapplication-TileColor" content="#323F47">
+
+	<!-- Facebook Meta Tags -->
+	<meta property="og:title" content="Anže Marinko">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://anzemarinko.github.io">
+	<meta property="og:image" content="https://anzemarinko.github.io/favicon_io/android-chrome-512x512.png">
+	<meta property="og:site_name" content="Anže Marinko">
+	<meta property="og:description" content="Osebna spletna stran">
+
     <title>Anže Marinko</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-            background: white;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background: #0077cc;
-            color: white;
-            border-radius: 10px 10px 0 0;
-        }
-        img.logo {
-            width: 100px;
-            vertical-align: middle;
-        }
-        .tabs {
-            display: flex;
-        }
-        .tab {
-            padding: 10px 20px;
-            cursor: pointer;
-            background: white;
-            color: #0077cc;
-            border: none;
-            border-radius: 5px;
-            margin-left: 10px;
-            font-weight: bold;
-        }
-        .tab:hover {
-            background: #0056b3;
-            color: white;
-        }
-        .content {
-            display: none;
-            padding-top: 20px;
-        }
-        .content.active {
-            display: block;
-        }
-        .project {
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-            cursor: pointer;
-        }
-        .project img {
-            max-width: 500px;
-            width: 100%;
-        }
-        .project img.logo {
-            width: 30px;
-            vertical-align: middle;
-        }
-        .project h3 {
-            display: inline;
-            margin-left: 10px;
-        }
-        .project .category {
-            font-size: 0.9em;
-            font-weight: bold;
-            padding: 3px 6px;
-            border-radius: 5px;
-            margin-left: 10px;
-        }
-        .pripomocek {
-            background-color: #d4edda;
-            color: #155724;
-        }
-        .igra {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-        .project .description {
-            max-height: 3.2em;
-            overflow: hidden;
-            position: relative;
-            transition: max-height 0.3s ease-in-out;
-        }
-        .project .description p {
-            margin: 0;
-            line-clamp: 1;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .project .description::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 1.6em;
-            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, white 100%);
-        }
-        .project.expanded .description {
-            max-height: none;
-        }
-        .project.expanded .description p {
-            line-clamp: unset;
-        }
-        .project.expanded .description::after {
-            display: none;
-        }
-    </style>
-    <script>
-        function showTab(tabName) {
-            document.querySelectorAll('.content').forEach(content => content.classList.remove('active'));
-            document.getElementById(tabName).classList.add('active');
-        }
-        function toggleProject(projectId) {
-            document.getElementById(projectId).classList.toggle('expanded');
-        }
-    </script>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>Anže Marinko</h1>
-            <img class="logo" src="AnzeMarinko-logo.ico" alt="SociaLite"> 
+            <img class="logo" src="favicon_io/android-chrome-512x512.png" alt="SociaLite"> 
             <div class="tabs">
                 <button class="tab" onclick="showTab('projekti')">Projekti</button>
                 <button class="tab" onclick="showTab('o_meni')">O meni</button>

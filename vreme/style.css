@@ -1,0 +1,64 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 10px;
+    background-color: #87b1f8;
+    text-align: center;
+}
+
+#demo {
+    font-size: 10px;
+}
+
+h1 {
+    color: #034a80;
+    margin-bottom: 10px;
+}
+
+h3 {
+    color: #0169b8;
+    margin-bottom: 10px;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: white;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.graph {
+    width: 100%;
+    margin-top: 20px;
+}
+
+#radar img {
+    width: 95%;
+    max-width: 600px;
+    border-radius: 15px;
+}
+
+#sun {
+    margin: 30px;
+    border-radius: 15px;
+    padding-bottom: 5px;
+    padding-top: 2px;
+    background: #b6cef8;
+}
+
+#sun p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+footer a {
+    text-decoration: none;  /* Odstrani podčrtavo */
+    color: #034a80;         /* Ohranimo privzeto barvo gumba */
+    display: block;         /* Poskrbimo, da pokriva celoten gumb */
+}
+
+.refresh {
+    cursor: pointer;
+}
