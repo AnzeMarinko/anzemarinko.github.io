@@ -33,11 +33,16 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Anže Marinko</h1>
-            <img class="logo" src="favicon_io/android-chrome-512x512.png" alt="SociaLite"> 
-            <div class="tabs">
-                <button class="tab" onclick="showTab('projekti')">Projekti</button>
-                <button class="tab" onclick="showTab('o_meni')">O meni</button>
+            <div class="header-left">
+                <img class="logo" src="favicon_io/android-chrome-512x512.png" alt="SociaLite"> 
+            </div>
+            <div class="header-right">
+                <h1>Anže Marinko</h1>
+            
+                <div class="tabs">
+                    <button class="tab" onclick="showTab('projekti')">Projekti</button>
+                    <button class="tab" onclick="showTab('o_meni')">O meni</button>
+                </div>
             </div>
         </div>
         
@@ -47,8 +52,22 @@
                 <a href="social_lite/index.html"><h3><img class="logo" src="social_lite/favicon_io/android-chrome-512x512.png" alt="SociaLite"> SociaLite</h3></a>
                 <span class="category pripomocek">🛠 Pripomoček</span>
                 <div class="description">
-                    <p>Program za zmernejšo uporabo družabnih omrežij z omejitvijo prikazanih objav. Podprta je uporaba YouTube-a.</p>
+                    <p>Program za zmernejšo uporabo družabnih omrežij z omejitvijo prikazanih objav.</br>Trenutno je podprta le uporaba YouTube-a.</p>
+                    
+                    <h3>Namen</h3>
+                    <p>Če se tudi vam kdaj zgodi, da čas ob družabnih omrežjih kar izpuhti, čeprav bi bolj potrebovali spanca ali pa prave družbe, je ta aplikacija morda del rešitve, da ne bo več prihajalo do tovrstnih situacij:</p>
                     <img src="social_lite/social_lite_horse.jpg" alt="SociaLite">
+
+                    <h3>Uporaba</h3>
+                    <p>Na Google Cloud Console si pridobi API ključ in ga vnesi v nastavitvah aplikacije. Nato si omogoči YouTube Data API v3. Z uporabo iskalnika ID-jev pridobi ID-je kanalov, ki jih želiš spremljati in jih dodaj v nastavitvah.</p>
+                    <p>API ključ in ID-ji kanalov se shranijo lokalno v brskalniku.</p>
+                    <p>Kanal lahko naknadno tudi skriješ iz prikaza ali pa ga odstraniš.</p>
+                    <p>Med objavami boš tako videl zadnje tri objave izbranih kanalov razvrščene po datumu objave.</p>
+
+                    <h3>Priporočila</h3>
+                    <p>API ključa ne delimo z drugimi osebami (oziroma to počnemo v omejenem obsegu), saj je Google API le do neke točke brezplačen.</p>
+                    <p>Za boljšo izkušnjo digitalnega minimalizma se izogibajte sledenju velikemu številu kanalov in dejansko aplikacijo na namizju/v zaznamkih raje nadomestite s to aplikacijo, da boste s tem zares zmanjšali svojo uporabo družabnih omrežij.</p>
+                    <p>V branje vam priporočam tudi branje knjige Digitalni minimalizem, ki je izšla pri zavodu Iskreni.</p>
                 </div>
             </div>
             
