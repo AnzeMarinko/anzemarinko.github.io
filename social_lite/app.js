@@ -186,10 +186,10 @@ function renderChannelList() {
         channelDiv.classList.add("channel-item");
         channelDiv.innerHTML = `
             ${channel.name}
-            <button class="remove-channel" onclick="removeChannel('${channel.id}')">🗑️</button>
             <button class="${isHidden ? "show" : "hide"}-channel" onclick="toggleChannelVisibility('${channel.id}')">
                 ${isHidden ? "👁️‍🗨️ Prikaži" : "🙈 Skrij"}
             </button>
+            <button class="remove-channel" onclick="removeChannel('${channel.id}')">🗑️</button>
         `;
         channelListDiv.appendChild(channelDiv);
     });
