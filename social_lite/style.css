@@ -111,7 +111,7 @@ iframe {
     background-color: #cc5200;
 }
 
-.nastavitve button {
+button {
     padding: 10px;
     font-size: 1em;
     margin-left: 10px;
@@ -123,7 +123,7 @@ iframe {
     color: white;
 }
 
-.nastavitve button:hover {
+button:hover {
     background-color: #cc5200;
 }
 

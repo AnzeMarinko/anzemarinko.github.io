@@ -101,6 +101,7 @@ function toggleChannelVisibility(channelId) {
         hiddenChannels.push(channelId);
     }
     saveHiddenChannels(hiddenChannels);
+    renderChannelList();
     fetchVideos();
 }
 
@@ -206,3 +207,12 @@ function toggleTooltip(id) {
     tooltip.style.display = tooltip.style.display === 'block' ? 'none' : 'block';
 }
 
+// Funkcija za preklapljanje nastavitvenega menija
+function toggleSettings() {
+    const settings = document.getElementById('settings');
+    if (settings.style.display === "none") {
+        settings.style.display = "block";
+    } else {
+        settings.style.display = "none";
+    }
+}
