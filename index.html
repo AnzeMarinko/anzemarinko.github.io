@@ -10,7 +10,7 @@
     <script defer src="app.js"></script>
 
     <link rel="icon" type="image/x-icon" href="https://anzemarinko.github.io/favicon_io/favicon.ico">
-	<meta name="theme-color" content="#87b1f8">
+	<meta name="theme-color" content="#0077cc">
 	<link rel="apple-touch-icon" sizes="180x180" href="https://anzemarinko.github.io/favicon_io/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="https://anzemarinko.github.io/favicon_io/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="https://anzemarinko.github.io/favicon_io/favicon-16x16.png">
@@ -18,7 +18,7 @@
 	<link rel="icon" type="image/png" sizes="512x512" href="https://anzemarinko.github.io/favicon_io/android-chrome-512x512.png">
 	<link rel="manifest" href="https://anzemarinko.github.io/favicon_io/site.webmanifest">
 	<link rel="shortcut icon" href="https://anzemarinko.github.io/favicon_io/favicon.ico">
-	<meta name="msapplication-TileColor" content="#323F47">
+	<meta name="msapplication-TileColor" content="#0077cc">
 
 	<!-- Facebook Meta Tags -->
 	<meta property="og:title" content="Anže Marinko">
@@ -32,66 +32,94 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
+        <header class="header">
             <div class="header-left">
                 <img class="logo" src="favicon_io/android-chrome-512x512.png" alt="SociaLite"> 
             </div>
             <div class="header-right">
                 <h1>Anže Marinko</h1>
-            
-                <div class="tabs">
-                    <button class="tab" onclick="showTab('projekti')">Projekti</button>
-                    <button class="tab" onclick="showTab('o_meni')">O meni</button>
-                </div>
+                <nav class="tabs">
+                    <button class="tab active" id="projekti button" onclick="showTab('projekti')">Projekti</button>
+                    <button class="tab" id="o_meni button" onclick="showTab('o_meni')">O meni</button>
+                </nav>
             </div>
-        </div>
+        </header>
         
-        <div id="projekti" class="content active">
+        <section id="projekti" class="content active">
             <h2>Projekti</h2>
-            <div id="socialite" class="project" onclick="toggleProject('socialite')">
-                <a href="social_lite/index.html"><h3><img class="logo" src="social_lite/favicon_io/android-chrome-512x512.png" alt="SociaLite"> SociaLite</h3></a>
+            
+            <article id="socialite" class="project" onclick="toggleProject('socialite')">
+                <a href="social_lite/index.html">
+                    <h3>
+                        <img class="logo" src="social_lite/favicon_io/android-chrome-512x512.png" alt="SociaLite"> 
+                        SociaLite
+                    </h3>
+                </a>
                 <span class="category pripomocek">🛠 Pripomoček</span>
                 <div class="description">
-                    <p>Program za zmernejšo uporabo družabnih omrežij z omejitvijo prikazanih objav.</br>Trenutno je podprta le uporaba YouTube-a.</p>
+                    <div><p>Program za zmernejšo uporabo družabnih omrežij z omejitvijo prikazanih objav.</br>Trenutno je podprta le uporaba YouTube-a.</p>
+                    </div>
                     
-                    <h3>Namen</h3>
-                    <p>Če se tudi vam kdaj zgodi, da čas ob družabnih omrežjih kar izpuhti, čeprav bi bolj potrebovali spanca ali pa prave družbe, je ta aplikacija morda del rešitve, da ne bo več prihajalo do tovrstnih situacij:</p>
-                    <img src="social_lite/social_lite_horse.jpg" alt="SociaLite">
+                    <div>
+                        <h4>Namen</h4>
+                        <p>Če se tudi vam kdaj zgodi, da čas ob družabnih omrežjih kar izpuhti, čeprav bi bolj potrebovali spanca ali pa prave družbe, je ta aplikacija morda del rešitve, da ne bo več prihajalo do tovrstnih situacij:</p>
+                        <img src="social_lite/social_lite_horse.jpg" alt="SociaLite" style="padding-top: 10pt;">
+                    </div>
 
-                    <h3>Uporaba</h3>
-                    <p>Na Google Cloud Console si pridobi API ključ in ga vnesi v nastavitvah aplikacije. Nato si omogoči YouTube Data API v3. Z uporabo iskalnika ID-jev pridobi ID-je kanalov, ki jih želiš spremljati in jih dodaj v nastavitvah.</p>
-                    <p>API ključ in ID-ji kanalov se shranijo lokalno v brskalniku.</p>
-                    <p>Kanal lahko naknadno tudi skriješ iz prikaza ali pa ga odstraniš.</p>
-                    <p>Med objavami boš tako videl zadnje tri objave izbranih kanalov razvrščene po datumu objave.</p>
+                    <div>
+                        <h4>Uporaba</h4>
+                        <ul>
+                            <li>Na Google Cloud Console si pridobi API ključ in ga vnesi v nastavitvah aplikacije.</li>
+                            <li>Nato si omogoči YouTube Data API v3. Z uporabo iskalnika ID-jev pridobi ID-je kanalov, ki jih želiš spremljati in jih dodaj v nastavitvah.</li>
+                            <li>API ključ in ID-ji kanalov se shranijo samo lokalno v brskalniku.</li>
+                            <li>Kanal lahko naknadno tudi skriješ iz prikaza ali pa ga odstraniš.</li>
+                            <li>Med objavami boš tako videl zadnje tri objave izbranih kanalov razvrščene po datumu objave.</li>
+                        </ul>
+                    </div>
 
-                    <h3>Priporočila</h3>
-                    <p>API ključa ne delimo z drugimi osebami (oziroma to počnemo v omejenem obsegu), saj je Google API le do neke točke brezplačen.</p>
-                    <p>Za boljšo izkušnjo digitalnega minimalizma se izogibajte sledenju velikemu številu kanalov in dejansko aplikacijo na namizju/v zaznamkih raje nadomestite s to aplikacijo, da boste s tem zares zmanjšali svojo uporabo družabnih omrežij.</p>
-                    <p>V branje vam priporočam tudi branje knjige Digitalni minimalizem, ki je izšla pri zavodu Iskreni.</p>
+                    <div>
+                        <h4>Priporočila</h4>
+                        <ul>
+                            <li>API ključa ne delimo z drugimi osebami (oziroma to počnemo v omejenem obsegu), saj je Google API le do neke točke brezplačen.</li>
+                            <li>Za boljšo izkušnjo digitalnega minimalizma se izogibajte sledenju velikemu številu kanalov in dejansko aplikacijo na namizju/v zaznamkih raje nadomestite s to aplikacijo, da boste s tem zares zmanjšali svojo uporabo družabnih omrežij.</li>
+                            <li>V branje vam priporočam tudi branje knjige Digitalni minimalizem, ki je izšla pri zavodu Iskreni.</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            </article>
             
-            <div id="vreme" class="project" onclick="toggleProject('vreme')">
-                <a href="vreme/index.html"><h3><img class="logo" src="vreme/favicon_io/android-chrome-512x512.png" alt="Vreme"> Vreme</h3></a>
+            <article id="vreme" class="project" onclick="toggleProject('vreme')">
+                <a href="vreme/index.html">
+                    <h3>
+                        <img class="logo" src="vreme/favicon_io/android-chrome-512x512.png" alt="Vreme"> 
+                        Vreme
+                    </h3>
+                </a>
                 <span class="category pripomocek">🛠 Pripomoček</span>
                 <div class="description">
                     <p>Lokalna vremenska napoved za naslednji teden in radarska slika padavin.</p>
+                    <p>Avtomatsko se pridobi vaša lokacija, za katero si lahko ogledate vremensko napoved za naslednji teden.</p>
                 </div>
-            </div>
+            </article>
             
-            <div id="pod_krinko" class="project" onclick="toggleProject('pod_krinko')">
-                <a href="pod_krinko/index.html"><h3><img class="logo" src="pod_krinko/favicon_io/android-chrome-512x512.png" alt="Pod krinko"> Pod krinko</h3></a>
+            <article id="pod_krinko" class="project" onclick="toggleProject('pod_krinko')">
+                <a href="pod_krinko/index.html">
+                    <h3>
+                        <img class="logo" src="pod_krinko/favicon_io/android-chrome-512x512.png" alt="Pod krinko"> 
+                        Pod krinko
+                    </h3>
+                </a>
                 <span class="category igra">🎮 Igra</span>
                 <div class="description">
-                    <p>Slovenska različica igre Undercover za 3-20 igralcev.</p>
+                    <p>Slovenska različica besedne igre Undercover za 3-20 igralcev.</p>
                 </div>
-            </div>
-        </div>
+            </article>
+        </section>
         
-        <div id="o_meni" class="content">
+        <section id="o_meni" class="content">
             <h2>O meni</h2>
-            <p>Sem Anže Marinko, razvijalec programske opreme in ustvarjalec različnih projektov.</p>
-        </div>
+            <p>Na kratko sem mož, oče, skavt, matematik, programer.</p>
+        </section>
     </div>
 </body>
 </html>

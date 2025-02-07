@@ -105,11 +105,10 @@ function toggleChannelVisibility(channelId) {
     fetchVideos();
 }
 
-// Pridobi in združi YouTube videe
 async function fetchVideos() {
     const apiKey = getApiKey();
     if (!apiKey) {
-        alert("Prosim, vnesi YouTube API ključ.");
+        alert("Prosim, vnesite API ključ.");
         return;
     }
 
@@ -131,11 +130,15 @@ async function fetchVideos() {
                 continue;
             }
             if (data.items) {
-                const videos = data.items.map(video => ({
+                const videoIds = data.items.map(video => video.id.videoId).filter(id => id);
+                const durations = await fetchVideoDurations(videoIds, apiKey);
+                
+                const videos = data.items.map((video, index) => ({
                     id: video.id.videoId,
                     title: video.snippet.title,
                     channel: channel.name,
                     publishedAt: new Date(video.snippet.publishedAt),
+                    duration: durations[video.id.videoId] || "??:??"
                 }));
                 allVideos = allVideos.concat(videos);
             }
@@ -145,12 +148,34 @@ async function fetchVideos() {
         }
     }
 
-    // Razvrsti videe po času objave (najnovejši na vrhu)
     allVideos.sort((a, b) => b.publishedAt - a.publishedAt);
     displayVideos(allVideos);
 }
 
-// Prikaz videov v enotnem zidu
+async function fetchVideoDurations(videoIds, apiKey) {
+    if (videoIds.length === 0) return {};
+
+    const url = `https://www.googleapis.com/youtube/v3/videos?key=${apiKey}&id=${videoIds.join(",")}&part=contentDetails`;
+    const response = await fetch(url);
+    const data = await response.json();
+    
+    let durations = {};
+    if (data.items) {
+        data.items.forEach(video => {
+            durations[video.id] = formatDuration(video.contentDetails.duration);
+        });
+    }
+    return durations;
+}
+
+function formatDuration(duration) {
+    const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+    const hours = match[1] ? parseInt(match[1]) : 0;
+    const minutes = match[2] ? parseInt(match[2]) : 0;
+    const seconds = match[3] ? parseInt(match[3]) : 0;
+    return (hours ? hours + ":" : "") + (minutes < 10 && hours ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+}
+
 function displayVideos(videos) {
     const videoWall = document.getElementById("video-wall");
     videoWall.innerHTML = "";
@@ -161,6 +186,10 @@ function displayVideos(videos) {
         const videoElement = document.createElement("div");
         videoElement.classList.add("video");
         videoElement.innerHTML = `
+            <div class="video-info">
+                <span class="video-channel">${video.channel}</span>
+                <span class="video-duration">⏱️ ${video.duration}</span>
+            </div>
             <iframe 
                 src="https://www.youtube-nocookie.com/embed/${video.id}?rel=0&modestbranding=1&controls=1&showinfo=0&iv_load_policy=3&fs=1" 
                 frameborder="0" 
@@ -210,9 +239,43 @@ function toggleTooltip(id) {
 // Funkcija za preklapljanje nastavitvenega menija
 function toggleSettings() {
     const settings = document.getElementById('settings');
+    const videos = document.getElementById('videos');
+    const settingsButton = document.getElementById('settingsButton');
     if (settings.style.display === "none") {
         settings.style.display = "block";
+        videos.style.display = "none";
+        settingsButton.innerHTML = "Zapri nastavitve";
     } else {
         settings.style.display = "none";
+        videos.style.display = "block";
+        settingsButton.innerHTML = "⚙️ Nastavitve";
     }
 }
+
+let wakeLock = null;
+
+async function requestWakeLock() {
+    if ('wakeLock' in navigator) {
+        try {
+            wakeLock = await navigator.wakeLock.request('screen');
+            console.log("Wake lock enabled");
+
+            // Poskrbimo, da se Wake Lock obnovi, če se stran skrije in prikaže
+            document.addEventListener("visibilitychange", async () => {
+                if (wakeLock !== null && document.visibilityState === "visible") {
+                    wakeLock = await navigator.wakeLock.request("screen");
+                }
+            });
+        } catch (err) {
+            console.error("Wake Lock error:", err);
+        }
+    }
+}
+
+// Aktiviramo Wake Lock ob kliku na iframe (predvajanje videa)
+document.addEventListener("click", (event) => {
+    if (event.target.tagName === "IFRAME") {
+        requestWakeLock();
+    }
+});
+

@@ -31,10 +31,14 @@
 </head>
 <body>
     <div class="container">
-        <h1>SociaLite</h1>
+        <div class="header">
+            <img class="logo" src="favicon_io/android-chrome-512x512.png" alt="SociaLite">
+            <h1>SociaLite</h1>
+            <button id="settingsButton" onclick="toggleSettings()">⚙️ Nastavitve</button>
+        </div>
         
-        <button id="settingsButton" onclick="toggleSettings()">⚙️ Nastavitve</button>
-        <button onclick="location.reload()" title="Osveži stran">🔄 Osveži</button>
+        
+       
 
         <div id="settings" class="nastavitve" style="display:none;">
             <!-- Vnos API ključa -->
@@ -43,8 +47,8 @@
                     placeholder="🔑 Vnesite svoj Google API ključ ..." >
                 <button onclick="saveApiKey()" title="Shrani API ključ v brskalnik">💾 Shrani ključ</button>
                 <button onclick="clearApiKey()" title="Odstrani API ključ iz brskalnika">🗑️ Počisti ključ</button>
-                <span class="tooltip-icon" title="API ključ je potreben za pridobivanje videov. V Google Cloud console morate omogočiti YouTube Data API v3. API ključ je varno shranjen samo v vašem brskalniku." onclick="toggleTooltip('channel-tooltip')">❓</span>
-                <span class="tooltip-text" id="channel-tooltip">API ključ je potreben za pridobivanje videov. V Google Cloud console morate omogočiti YouTube Data API v3. API ključ je varno shranjen samo v vašem brskalniku.</span>
+                <span class="tooltip-icon" title="API ključ je potreben za pridobivanje videov. V Google Cloud console morate omogočiti YouTube Data API v3. API ključ je shranjen samo v vašem brskalniku." onclick="toggleTooltip('api-tooltip')">❓</span>
+                <span class="tooltip-text" id="api-tooltip">API ključ je potreben za pridobivanje videov. V Google Cloud console morate omogočiti YouTube Data API v3. API ključ je shranjen samo v vašem brskalniku.</span>
             </div>
 
             <!-- Vnos YouTube Channel ID -->
@@ -61,11 +65,14 @@
 
             <h2>📌 Dodani kanali</h2>
             <div id="channelList"></div>
-
-            <h2>Zadnje objave</h2>
         </div>
 
-        <div id="video-wall" class="video-wall"></div>
+        <div id="videos" class="videos" style="display:block;">
+            <button onclick="location.reload()" title="Osveži stran" style="margin-bottom: 30pt;">🔄 Osveži</button>
+
+            <div id="video-wall" class="video-wall"></div>
+        </div>
+        
     </div>
 
     <footer>

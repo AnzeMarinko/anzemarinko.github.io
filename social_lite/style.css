@@ -97,6 +97,30 @@ iframe {
     color: white;
 }
 
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    margin: auto;
+}
+
+.header img {
+    height: 50pt;
+    margin: auto;
+}
+
+.header button {
+    margin: auto;
+}
+
+button#settingsButton {
+    background-color: red;
+}
+
+button#settingsButton:hover {
+    background-color: darkred;
+}
+
 #channelList button.remove-channel {
     background-color: red;
     color: white;
@@ -168,5 +192,15 @@ footer a {
     max-width: 300px;
     margin-top: 5px;
     font-size: 0.9em;
+}
+
+.watched {
+    opacity: 0.5;
+}
+.video-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 5px;
 }
 

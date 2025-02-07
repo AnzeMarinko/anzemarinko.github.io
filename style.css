@@ -46,6 +46,14 @@ img.logo {
     background: #0056b3;
     color: white;
 }
+.tab.active {
+    background: #8aceff;
+    color: #014575;
+}
+.tab.active:hover {
+    background: #4595eb;
+    color: white;
+}
 .content {
     display: none;
     padding-top: 20px;
