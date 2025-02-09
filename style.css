@@ -64,7 +64,6 @@ img.logo {
 .project {
     padding: 10px;
     border-bottom: 1px solid #ccc;
-    cursor: pointer;
 }
 .project img {
     max-width: 500px;
@@ -98,7 +97,13 @@ img.logo {
     overflow: hidden;
     position: relative;
     transition: max-height 0.3s ease-in-out;
+    cursor: zoom-in;
 }
+
+.project.expanded .description {
+    cursor: zoom-out;
+}
+
 .project .description p {
     margin: 0;
     line-clamp: 1;

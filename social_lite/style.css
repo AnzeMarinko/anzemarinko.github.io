@@ -6,11 +6,6 @@ body {
     text-align: center;
     margin: 0;
     padding: 20px;
-    overscroll-behavior: none;
-}
-
-html {
-    overscroll-behavior: none;
 }
 
 /* Glavni container */
@@ -55,7 +50,7 @@ h2 {
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
-    min-width: 300px; /* Prepreči krčenje videov */
+    min-width: 280px; /* Prepreči krčenje videov */
     flex: 0 0 auto; /* Ohranimo velikost videa */
     scroll-snap-align: start; /* Videi se lepo postavijo */
 }
