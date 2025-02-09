@@ -76,7 +76,6 @@ async function addChannel() {
         channels.push({ id: channelId, name: channelName });
         saveChannels(channels);
         renderChannelList();
-        fetchVideos();
     } catch (error) {
         console.error("Napaka pri pridobivanju imena kanala:", error);
         alert("Napaka pri pridobivanju imena kanala.");
@@ -89,7 +88,6 @@ function removeChannel(channelId) {
     let channels = getChannels().filter(c => c.id !== channelId);
     saveChannels(channels);
     renderChannelList();
-    fetchVideos();
 }
 
 // Skrij/Prikaži kanal
@@ -102,7 +100,6 @@ function toggleChannelVisibility(channelId) {
     }
     saveHiddenChannels(hiddenChannels);
     renderChannelList();
-    fetchVideos();
 }
 
 async function fetchVideos() {
@@ -249,6 +246,7 @@ function toggleSettings() {
         settings.style.display = "none";
         videos.style.display = "block";
         settingsButton.innerHTML = "⚙️ Nastavitve";
+        fetchVideos();
     }
 }
 
@@ -266,16 +264,38 @@ async function requestWakeLock() {
                     wakeLock = await navigator.wakeLock.request("screen");
                 }
             });
+            keepWakeLockAlive();
         } catch (err) {
             console.error("Wake Lock error:", err);
         }
     }
 }
 
+async function keepWakeLockAlive() {
+    try {
+        while (wakeLock !== null) {
+            await new Promise(resolve => setTimeout(resolve, 30000)); // Osveži vsakih 30s
+            wakeLock = await navigator.wakeLock.request("screen");
+        }
+    } catch (err) {
+        console.error("Wake Lock refresh error:", err);
+    }
+}
+
 // Aktiviramo Wake Lock ob kliku na iframe (predvajanje videa)
-document.addEventListener("click", (event) => {
+document.addEventListener("pointerdown", (event) => {
     if (event.target.tagName === "IFRAME") {
         requestWakeLock();
+        
     }
 });
 
+document.addEventListener("fullscreenchange", async () => {
+    if (document.fullscreenElement && wakeLock === null) {
+        await requestWakeLock();
+    }
+});
+
+document.addEventListener("fullscreenerror", (event) => {
+    console.error("Fullscreen mode error:", event);
+});
