@@ -183,11 +183,11 @@ function displayVideos(videos) {
         const videoElement = document.createElement("div");
         videoElement.classList.add("video");
         videoElement.innerHTML = `
-            <div class="video-info">
+            <div class="video-info" title="${video.title}">
                 <span class="video-channel">${video.channel}</span>
                 <span class="video-duration">⏱️ ${video.duration}</span>
             </div>
-            <iframe 
+            <iframe
                 src="https://www.youtube-nocookie.com/embed/${video.id}?rel=0&modestbranding=1&controls=1&showinfo=0&iv_load_policy=3&fs=1" 
                 frameborder="0" 
                 allow="autoplay; encrypted-media" 
