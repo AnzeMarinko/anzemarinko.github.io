@@ -299,3 +299,11 @@ document.addEventListener("fullscreenchange", async () => {
 document.addEventListener("fullscreenerror", (event) => {
     console.error("Fullscreen mode error:", event);
 });
+
+function keepAwake() {
+    let audio = document.getElementById("keep-awake-audio");
+    audio.play().catch(error => console.log("Audio play error:", error));
+}
+
+// Začni predvajati, ko uporabnik klikne kjerkoli
+document.addEventListener("click", keepAwake);
